@@ -14,14 +14,20 @@ msg['From'] = email_address
 msg['To'] = 'pritesh.l@somaiya.edu'
 msg.set_content('Hello this is my first email sent')
 
-# sending single image
-with open('A:\programming codes\python-cyber\email\pic.jpg', 'rb') as f:
-    file_data = f.read()
-    file_type = imghdr.what(f.name)
-    file_name = f.name
+# files = ['1.jpg', '2.jpg', '3.jpg', '4.jpg']
+files = ['resume.pdf']
 
-msg.add_attachment(file_data, maintype="image",
-                   subtype=file_type, filename=file_name)
+for file in files:
+    # sending single image
+    with open(file, 'rb') as f:
+        file_data = f.read()
+        file_type = imghdr.what(f.name)
+        file_name = f.name
+
+    # msg.add_attachment(file_data, maintype="image",
+    #                    subtype=file_type, filename=file_name)
+    msg.add_attachment(file_data, maintype="application",
+                       subtype='octet-stream', filename=file_name)
 
 with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
     # if you using local server for testing
